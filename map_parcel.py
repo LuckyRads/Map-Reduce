@@ -2,10 +2,10 @@
 import sys
 
 sys.stdin = open("duom_cut.txt", "r")
-sys.stdout = open("map_weight_out.txt", "w")
+sys.stdout = open("map_parcel_out.txt", "w")
 
 main_field = 'marsrutas'
-secondary_field = 'svoris'
+secondary_field = 'siuntu skaicius'
 
 for line in sys.stdin:
     line = line.strip()
@@ -28,7 +28,7 @@ for line in sys.stdin:
             if key == main_field:
                 map_key = int(value)
             elif key == secondary_field:
-                map_value = float(value)
+                map_value = int(value)
 
         if(map_key != None and map_value != None):
             print('%s\t%s' % (map_key, map_value))

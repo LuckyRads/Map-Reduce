@@ -2,10 +2,11 @@
 import sys
 
 sys.stdin = open("duom_cut.txt", "r")
-sys.stdout = open("map_weight_out.txt", "w")
+sys.stdout = open("mapout.txt", "w")
 
 main_field = 'marsrutas'
-secondary_field = 'svoris'
+second_field = 'svoris'
+third_field = 'siuntu skaicius'
 
 for line in sys.stdin:
     line = line.strip()
@@ -16,7 +17,8 @@ for line in sys.stdin:
         parsed_strings = data_entry.split('}{')
 
         map_key = None
-        map_value = None
+        map_value_1 = None
+        map_value_2 = None
 
         for parsed_string in parsed_strings:
             (key, value) = parsed_string.split('=')
@@ -27,8 +29,10 @@ for line in sys.stdin:
 
             if key == main_field:
                 map_key = int(value)
-            elif key == secondary_field:
-                map_value = float(value)
+            if key == second_field:
+                map_value_1 = float(value)
+            if key == third_field:
+                map_value_2 = int(value)
 
-        if(map_key != None and map_value != None):
-            print('%s\t%s' % (map_key, map_value))
+        if(map_key != None and map_value_1 != None and map_value_2 != None):
+            print(f'{map_key}\t{map_value_1}\t{map_value_2}')
