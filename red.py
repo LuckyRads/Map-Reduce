@@ -8,13 +8,18 @@ sys.stdout = open("redout.txt", "w")
 current_key = None
 current_weight_sum = 0
 current_parcel_sum = 0
+
+current_zone = None
+current_zone_count = 0
+zone_dict = {}
+
 key = None
 
 for line in sys.stdin:
     line = line.strip()
 
     # Parse the input we got from mapper
-    key, val_1, val_2 = line.split('\t', 2)
+    key, val_1, val_2, zone = line.split('\t', 3)
 
     # convert count (currently a string) to int
     try:
@@ -30,10 +35,23 @@ for line in sys.stdin:
     if current_key == key:
         current_weight_sum += val_1
         current_parcel_sum += val_2
+
+        # For this key, put the zone count into the dictionary
+        if zone in zone_dict:
+            zone_dict[zone] += 1
+        else:
+            zone_dict.setdefault(zone, 1)
     else:
         if current_key != None:
             # write result to STDOUT
-            print(f'{current_key}\t{current_weight_sum}\t{current_parcel_sum}')
+            print(
+                f'{current_key}\t{current_weight_sum}\t{current_parcel_sum}', end='')
+
+            # Write zones for this key
+            [print(f'\t{zone}\t{zone_count}', end='')
+             for [zone, zone_count] in zone_dict.items()]
+            print('\n')
+            zone_dict = {}
 
         current_weight_sum = val_1
         current_parcel_sum = val_2
@@ -41,4 +59,7 @@ for line in sys.stdin:
 
 # do not forget to output the last word if needed!
 if current_key == key:
-    print(f'{current_key}\t{current_weight_sum}\t{current_parcel_sum}')
+    print(f'{current_key}\t{current_weight_sum}\t{current_parcel_sum}', end='')
+    # Write zones for this key
+    [print(f'\t{zone}\t{zone_count}', end='')
+        for [zone, zone_count] in zone_dict.items()]
