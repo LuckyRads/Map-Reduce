@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 
-sys.stdin = open("duom_full.txt", "r")
+sys.stdin = open("duom_cut.txt", "r")
 sys.stdout = open("mapout.txt", "w")
 
 main_field = 'marsrutas'
